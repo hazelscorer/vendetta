@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VENDETTA | Visual Artist</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600&family=Work+Sans:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #0a0a0a;
+            --secondary-bg: #1a1a1a;
+            --accent-red: #ff0033;
+            --accent-yellow: #ffcc00;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --text-dim: #888888;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Noise texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: overlay;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem 4rem;
+            z-index: 1000;
+            background: linear-gradient(180deg, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0) 100%);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            letter-spacing: 0.3rem;
+            color: var(--text-primary);
+            text-shadow: 3px 3px 0 var(--accent-red);
+            animation: glitch 3s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% {
+                text-shadow: 3px 3px 0 var(--accent-red);
+            }
+            25% {
+                text-shadow: -3px -3px 0 var(--accent-yellow), 3px 3px 0 var(--accent-red);
+            }
+            50% {
+                text-shadow: 3px 3px 0 var(--accent-red);
+            }
+            75% {
+                text-shadow: 3px -3px 0 var(--accent-red), -3px 3px 0 var(--accent-yellow);
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 0 4rem;
+            padding-top: 8rem;
+            position: relative;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%);
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(0deg, var(--primary-bg) 0%, transparent 100%);
+        }
+
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(4rem, 12vw, 10rem);
+            line-height: 0.9;
+            letter-spacing: -0.02em;
+            margin-bottom: 2rem;
+            position: relative;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-title .line {
+            display: block;
+            overflow: hidden;
+        }
+
+        .hero-title .line span {
+            display: inline-block;
+            animation: slideUp 1s ease-out backwards;
+        }
+
+        .hero-title .line:nth-child(1) span { animation-delay: 0.1s; }
+        .hero-title .line:nth-child(2) span { animation-delay: 0.3s; color: var(--accent-red); }
+        .hero-title .line:nth-child(3) span { animation-delay: 0.5s; }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .hero-subtitle {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 0.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            animation: fadeIn 1s ease-out 0.8s backwards;
+        }
+
+        .hero-description {
+            max-width: 600px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            animation: fadeIn 1s ease-out 1s backwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            padding: 8rem 4rem;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 4rem;
+            letter-spacing: 0.2rem;
+            margin-bottom: 4rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: var(--accent-red);
+            margin: 1rem auto;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .artwork-card {
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .artwork-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--accent-red), var(--accent-yellow), var(--accent-red));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .artwork-card:hover::before {
+            opacity: 1;
+        }
+
+        .artwork-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .artwork-image {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .artwork-card:hover .artwork-image {
+            transform: scale(1.05);
+        }
+
+        .artwork-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(0deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 70%, transparent 100%);
+            transform: translateY(calc(100% - 60px));
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .artwork-card:hover .artwork-info {
+            transform: translateY(0);
+        }
+
+        .artwork-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 0.1rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .artwork-year {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            letter-spacing: 0.05rem;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 8rem 4rem;
+            background: var(--secondary-bg);
+            position: relative;
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-header {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+            align-items: start;
+        }
+
+        .artist-photo-container {
+            position: relative;
+        }
+
+        .artist-photo {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            border: 3px solid var(--accent-red);
+            box-shadow: 15px 15px 0 rgba(255, 0, 51, 0.3);
+            transition: all 0.4s ease;
+        }
+
+        .artist-photo:hover {
+            transform: translate(5px, 5px);
+            box-shadow: 10px 10px 0 rgba(255, 0, 51, 0.5);
+        }
+
+        .artist-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .about-text {
+            font-size: 1.2rem;
+            line-height: 2;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .about-text strong {
+            color: var(--accent-red);
+            font-weight: 600;
+        }
+
+        .about-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .detail-item {
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--accent-red);
+            transition: all 0.3s ease;
+        }
+
+        .detail-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateX(10px);
+        }
+
+        .detail-label {
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.2rem;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-value {
+            font-size: 1.3rem;
+            font-weight: 300;
+            color: var(--text-primary);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 8rem 4rem;
+            text-align: center;
+        }
+
+        .contact-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 5rem;
+            letter-spacing: 0.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-text {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
+        .contact-email {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            color: var(--accent-red);
+            text-decoration: none;
+            letter-spacing: 0.1rem;
+            display: inline-block;
+            padding: 1rem 2rem;
+            border: 2px solid var(--accent-red);
+            transition: all 0.3s ease;
+        }
+
+        .contact-email:hover {
+            background: var(--accent-red);
+            color: var(--primary-bg);
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 4rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 1.5rem 2rem;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .hero {
+                padding: 0 2rem;
+                padding-top: 6rem;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+                letter-spacing: 0.3rem;
+            }
+
+            .gallery-section,
+            .about-section,
+            .contact-section {
+                padding: 4rem 2rem;
+            }
+
+            .section-title,
+            .contact-title {
+                font-size: 2.5rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .artwork-image {
+                height: 350px;
+            }
+
+            .about-details {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .about-header {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .artist-photo {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">VENDETTA</div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1 class="hero-title">
+                <div class="line"><span>RAW.</span></div>
+                <div class="line"><span>UNFILTERED.</span></div>
+                <div class="line"><span>EXPRESSION.</span></div>
+            </h1>
+            <p class="hero-subtitle">Visual Artist | Derry City</p>
+            <p class="hero-description">
+                Exploring the human condition through bold colors, stark contrasts, and unflinching emotion. 
+                Each piece is a conversation between chaos and control, vulnerability and strength, 
+                silence and screaming truth.
+            </p>
+        </section>
+
+        <section class="gallery-section">
+            <h2 class="section-title">Selected Works</h2>
+            <div class="gallery-grid">
+                <div class="artwork-card">
+                    <img src="images/suit-portrait.jpg" alt="Suit Portrait" class="artwork-image">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Duality</h3>
+                        <p class="artwork-year">2024 | Oil on Canvas | 150 × 80 cm</p>
+                    </div>
+                </div>
+
+                <div class="artwork-card">
+                    <img src="images/silhouette.jpg" alt="Silhouette" class="artwork-image">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Isolation</h3>
+                        <p class="artwork-year">2024 | Oil on Canvas | 40 × 60 cm</p>
+                    </div>
+                </div>
+
+                <div class="artwork-card">
+                    <img src="images/reggae-spirit.jpg" alt="Reggae Spirit" class="artwork-image">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Vibrant Soul</h3>
+                        <p class="artwork-year">2024 | Oil on Canvas | 40 × 60 cm</p>
+                    </div>
+                </div>
+
+                <div class="artwork-card">
+                    <img src="images/abstract-weave.jpg" alt="Abstract Weave" class="artwork-image">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Interwoven</h3>
+                        <p class="artwork-year">2024 | Oil on Canvas | 40 × 60 cm</p>
+                    </div>
+                </div>
+
+                <div class="artwork-card">
+                    <img src="images/neon-face.jpg" alt="Neon Face" class="artwork-image">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Electric</h3>
+                        <p class="artwork-year">2024 | Oil on Canvas | 40 × 60 cm</p>
+                    </div>
+                </div>
+
+                <div class="artwork-card">
+                    <img src="images/sunset-silhouette.jpg" alt="Sunset Silhouette" class="artwork-image">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Golden Hour</h3>
+                        <p class="artwork-year">2024 | Oil on Canvas | 150 × 80 cm</p>
+                    </div>
+                </div>
+
+                <div class="artwork-card">
+                    <img src="images/alive-portrait.jpg" alt="Alive Portrait" class="artwork-image">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">What Do I Feel So Alive?</h3>
+                        <p class="artwork-year">2024 | Oil on Canvas | 40 × 60 cm</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-section">
+            <h2 class="section-title">About Vendetta</h2>
+            <div class="about-content">
+                <div class="about-header">
+                    <div class="artist-photo-container">
+                        <img src="images/artist-photo.jpg" alt="Vendetta - Visual Artist" class="artist-photo">
+                    </div>
+                    <div class="artist-info">
+                        <p class="about-text">
+                            A 19-year-old visual artist based in <strong>Derry City</strong>, Vendetta creates 
+                            work that refuses to be ignored. Trained part-time in art at <strong>Foyle College</strong>, 
+                            their practice emerged from a need to externalize the internal—to give form to feelings 
+                            that words can't capture.
+                        </p>
+                        <p class="about-text">
+                            Working primarily with <strong>oil paints</strong>, Vendetta's portfolio spans portraiture, 
+                            abstract expressionism, and experimental compositions that challenge conventional aesthetics. 
+                            Each piece operates at the intersection of beauty and discomfort, inviting viewers to 
+                            confront what they'd rather look away from.
+                        </p>
+                    </div>
+                </div>
+                
+                <p class="about-text">
+                    The work is intentionally provocative—not for shock value, but as an honest reflection 
+                    of the complexity, contradiction, and intensity of being young and alive in this moment.
+                </p>
+
+                <div class="about-details">
+                    <div class="detail-item">
+                        <div class="detail-label">Location</div>
+                        <div class="detail-value">Derry City, NI</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Education</div>
+                        <div class="detail-value">Foyle College</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Medium</div>
+                        <div class="detail-value">Oil on Canvas</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Focus</div>
+                        <div class="detail-value">Contemporary Expression</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-section">
+            <h2 class="contact-title">Let's Connect</h2>
+            <p class="contact-text">
+                Interested in collaborations, commissions, or exhibitions? 
+                Get in touch to discuss opportunities.
+            </p>
+            <a href="/cdn-cgi/l/email-protection#e79182898382939386c9869593a7829f868a978b82c984888a" class="contact-email"><span class="__cf_email__" data-cfemail="6f190a010b0a1b1b0e410e1d1b2f0a170e021f030a410c0002">[email&#160;protected]</span></a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Vendetta. All rights reserved. | Derry City, Northern Ireland</p>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Artwork card reveal animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, index * 100);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.artwork-card').forEach(card =
